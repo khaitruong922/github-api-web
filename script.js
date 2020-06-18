@@ -36,10 +36,14 @@ function displayError() {
     document.getElementById('error').style.display = '';
 }
 function displayRepo(data) {
-    const { name, created_at } = data;
-    const item = document.createElement('li');
-    item.appendChild(document.createTextNode(`${name} - Created at: ${parseDate(created_at)}`));
-    document.getElementById('repos-list').appendChild(item);
+    const { name, created_at,html_url } = data;
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.appendChild(document.createTextNode(name))
+    a.href = html_url;
+    li.appendChild(a)
+    li.appendChild(document.createTextNode(` - Created at: ${parseDate(created_at)}`));
+    document.getElementById('repos-list').appendChild(li);
 
 }
 function displayUserData(data) {
@@ -54,7 +58,7 @@ function displayUserData(data) {
 }
 function parseDate(date) {
     d = new Date(date);
-    return `${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`
+    return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
 }
 searchForm.addEventListener('submit', (e) => {
     e.preventDefault();
