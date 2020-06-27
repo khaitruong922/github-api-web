@@ -5,16 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='style.css'>
-    <title>Hello World</title>
+    <title>GitHub Search</title>
 </head>
 
 <body>
-    <form class='content-center' id='search-form'>
-        <input id='username-input' type='text' class="py-2 px-4 block">
-        <input type="submit" class="button-big bg-blue-100 py-2 px-4 hover:bg-blue-200">
+    <div class='bg-purple-200 p-5 font-bold text-2xl mb-10'>
+        <img src='github.png' class='w-16 mr-10 inline'>
+        GitHub Search
+    </div>
+    <div class='text-center'>
+        <form id='search-form'>
+            <div class='m-auto w-1/2 border-2 border-purple-200 inline-block'>
+                <input placeholder="Username" id='username-input' type='text' class="w-full py-2 px-4 text-gray-700">
+            </div>
+                <input type="submit" class="button-big bg-purple-100 py-2 px-4 hover:bg-purple-200 text-gray-700" value="Search">
+            </div>
+        </form>
+    </div>
 
-    </form>
-    <div id='content' style='display: none;'>
+    <div class='text-center' id='content' style='display: none;'>
         <h2 id='username'></h2>
         <img id='avatar' src='' alt='avatar'>
         <div>
@@ -22,7 +31,7 @@
             <ol id='repos-list'>
             </ol>
         </div>
-        
+
         <h4 id='followers'></h4>
         <h4 id='followings'></h4>
         <h4 id='created-at'></h4>
