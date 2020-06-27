@@ -24,14 +24,17 @@
                 class="cursor-pointer font-semibold outline-none button-big bg-purple-100 py-2 px-4 hover:bg-purple-200 text-gray-700"
                 value="Search">
     </div>
-    </form>
 
+    </form>
+    <div class='mx-auto lg:w-2/3' id='users'>
+    </div>
     <div class='mx-auto lg:w-2/3' id='content'>
+        <img id='back-btn' class='bg-gray-100 w-12 mb-2 rounded-full p-2 cursor-pointer' src='images/back.png'>
         <div class='text-center p-8 bg-purple-100'>
-            <a id='profile-url'>
+            <a href='#' id='profile-url'>
                 <img class='mx-auto rounded-full w-32 h-auto' id='avatar' src='images/avatar.png' alt='avatar'>
+                <h2 class='p-5 text-3xl' id='name'>Name</h2>
             </a>
-            <h2 class='p-5 text-3xl' id='name'>Name</h2>
         </div>
         <div class='flex flex-wrap text-center'>
             <div class='bg-teal-100 py-8 w-1/2 md:w-1/4'>
@@ -67,7 +70,7 @@
     <div class='hidden text-center' id='error'>
         <img class='mx-auto w-40 mb-10' src='images/github1.png'>
         <h2 class='font-bold text-3xl'>
-            User not found.
+            No user found.
         </h2>
     </div>
     <script src='js/script.js'></script>
