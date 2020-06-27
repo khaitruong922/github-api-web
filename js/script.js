@@ -46,7 +46,7 @@ function displayRepo(data) {
     document.getElementById('repos-list').innerHTML +=
         `
     <div class='p-10 py-24 text-center w-full md:w-1/2 lg:w-1/3 bg-orange-100 text-xl p-4 border-orange-200 border'>
-        <a href='${html_url}'><img class='mx-4 mb-4 w-16 mx-auto rounded-full' src='images/github1.png'>
+        <a href='${html_url}' target='_blank'><img class='mx-4 mb-4 w-16 mx-auto rounded-full' src='images/github1.png'>
             <div>
                 <h3 class='text-2xl mb-2'>${name}</h3>
                 <h3 class='text-sm'>${parseDate(created_at)}</h3>
