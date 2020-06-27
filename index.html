@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='css/style.css'>
+    <link rel="icon" href="images/github.png" type="image/x-icon">
     <title>GitHub Search</title>
 </head>
 
@@ -20,7 +21,7 @@
                     class="outline-none w-full py-2 px-4 text-gray-700">
             </div>
             <input type="submit"
-                class="font-semibold outline-none button-big bg-purple-100 py-2 px-4 hover:bg-purple-200 text-gray-700"
+                class="cursor-pointer font-semibold outline-none button-big bg-purple-100 py-2 px-4 hover:bg-purple-200 text-gray-700"
                 value="Search">
     </div>
     </form>
@@ -28,7 +29,9 @@
     <div class='mx-auto lg:w-2/3' id='content'>
         <div class='text-center p-8 bg-purple-100'>
             <img class='mx-auto rounded-full w-32 h-auto' id='avatar' src='images/avatar.png' alt='avatar'>
-            <a id='profile-url'><h2 class='p-5 text-3xl' id='name'>Your name</h2></a>
+            <a id='profile-url'>
+                <h2 class='p-5 text-3xl' id='name'>Name</h2>
+            </a>
         </div>
         <div class='flex flex-wrap text-center'>
             <div class='bg-teal-100 py-8 w-1/2 md:w-1/4'>

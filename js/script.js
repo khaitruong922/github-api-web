@@ -38,8 +38,8 @@ function displayRepo(data) {
     const { name, created_at, html_url } = data;
     document.getElementById('repos-list').innerHTML +=
         `
-    <div onclick="window.location='${html_url}';" class='cursor-pointer p-10 py-24 text-center w-1/3 bg-orange-100 text-xl p-4 border-orange-200 border'>
-        <img class='mx-4 mb-4 w-16 mx-auto rounded-full' src='images/github1.png'>
+    <div class='p-10 py-24 text-center w-full md:w-1/2 lg:w-1/3 bg-orange-100 text-xl p-4 border-orange-200 border'>
+        <a href='${html_url}'><img class='mx-4 mb-4 w-16 mx-auto rounded-full' src='images/github1.png'></a>
         <h3 class='text-2xl mb-2'>${name}</h3>
         <h3 class='text-sm'>${parseDate(created_at)}</h3>
     </div>
