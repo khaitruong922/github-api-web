@@ -1,0 +1,23 @@
+{
+  "name": "apiweb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "dependencies": {
+    "tailwindcss": "^1.4.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build:css": "tailwind build src/style.css -o public/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khaitruong922/github-api-web.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khaitruong922/github-api-web/issues"
+  },
+  "homepage": "https://github.com/khaitruong922/github-api-web#readme"
+}
