@@ -24,41 +24,41 @@ async function fetchRepos(username) {
             displayRepo(repo)
         })
     } else {
-        displayError();
     }
 }
 function displayContentDiv() {
-    document.getElementById('content').style.display = '';
-    document.getElementById('error').style.display = 'none';
+    document.getElementById('content').classList.remove('hidden');
+    document.getElementById('error').classList.add('hidden');
 }
 function displayError() {
-    document.getElementById('content').style.display = 'none';
-    document.getElementById('error').style.display = '';
+    document.getElementById('content').classList.add('hidden');
+    document.getElementById('error').classList.remove('hidden');
 }
 function displayRepo(data) {
-    const { name, created_at,html_url } = data;
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.appendChild(document.createTextNode(name))
-    a.href = html_url;
-    li.appendChild(a)
-    li.appendChild(document.createTextNode(` - Created at: ${parseDate(created_at)}`));
-    document.getElementById('repos-list').appendChild(li);
+    const { name, created_at, html_url } = data;
+    document.getElementById('repos-list').innerHTML +=
+        `
+    <div onclick="window.location='${html_url}';" class='cursor-pointer p-10 py-24 text-center w-1/3 bg-orange-100 text-xl p-4 border-orange-200 border'>
+        <img class='mx-4 mb-4 w-16 mx-auto rounded-full' src='images/github1.png'>
+        <h3 class='text-2xl mb-2'>${name}</h3>
+        <h3 class='text-sm'>${parseDate(created_at)}</h3>
+    </div>
+    `;
 
 }
 function displayUserData(data) {
     displayContentDiv();
-    const { login, avatar_url, public_repos, followers, following, created_at } = data;
-    document.getElementById('username').innerText = login;
+    const { name, html_url, avatar_url, public_repos, followers, following, created_at } = data;
+    document.getElementById('name').innerText = name;
+    document.getElementById('profile-url').href = html_url;
     document.getElementById('avatar').src = avatar_url;
-    document.getElementById('public-repos').innerText = `Public repos: ${public_repos}`;
-    document.getElementById('followers').innerText = `Followers: ${followers}`;
-    document.getElementById('followings').innerText = `Followings: ${following}`;
-    document.getElementById('created-at').innerText = `Created at: ${parseDate(created_at)}`;
+    document.getElementById('repositories').innerText = public_repos;
+    document.getElementById('followers').innerText = followers;
+    document.getElementById('followings').innerText = following;
+    document.getElementById('joined-date').innerText = parseDate(created_at);
 }
 function parseDate(date) {
-    d = new Date(date);
-    return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
+    return new Date(date).toISOString().split('T')[0];
 }
 searchForm.addEventListener('submit', (e) => {
     e.preventDefault();

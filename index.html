@@ -4,40 +4,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet' href='style.css'>
+    <link rel='stylesheet' href='css/style.css'>
     <title>GitHub Search</title>
 </head>
 
 <body>
-    <div class='bg-purple-200 p-5 font-bold text-2xl mb-10'>
-        <img src='github.png' class='w-16 mr-10 inline'>
-        GitHub Search
+    <div class='bg-purple-200 p-6 mb-10'>
+        <a href='index.html'><img src='images/github.png' class='w-12 mx-8 inline'></a>
+        <h2 class="font-medium text-3xl inline text-purple-900">GitHub Search</h2>
     </div>
-    <div class='text-center'>
+    <div class='text-center mb-10 '>
         <form id='search-form'>
-            <div class='m-auto w-1/2 border-2 border-purple-200 inline-block'>
-                <input placeholder="Username" id='username-input' type='text' class="w-full py-2 px-4 text-gray-700">
+            <div class='m-auto w-3/4 md:w-1/2 border-2 border-purple-200 inline-block'>
+                <input placeholder="Username" id='username-input' type='text'
+                    class="outline-none w-full py-2 px-4 text-gray-700">
             </div>
-                <input type="submit" class="button-big bg-purple-100 py-2 px-4 hover:bg-purple-200 text-gray-700" value="Search">
-            </div>
-        </form>
+            <input type="submit"
+                class="font-semibold outline-none button-big bg-purple-100 py-2 px-4 hover:bg-purple-200 text-gray-700"
+                value="Search">
     </div>
+    </form>
 
-    <div class='text-center' id='content' style='display: none;'>
-        <h2 id='username'></h2>
-        <img id='avatar' src='' alt='avatar'>
-        <div>
-            <h4 id='public-repos'></h4>
-            <ol id='repos-list'>
-            </ol>
+    <div class='mx-auto lg:w-2/3' id='content'>
+        <div class='text-center p-8 bg-purple-100'>
+            <img class='mx-auto rounded-full w-32 h-auto' id='avatar' src='images/avatar.png' alt='avatar'>
+            <a id='profile-url'><h2 class='p-5 text-3xl' id='name'>Your name</h2></a>
         </div>
+        <div class='flex flex-wrap text-center'>
+            <div class='bg-teal-100 py-8 w-1/2 md:w-1/4'>
+                <h2 class='text-2xl font-medium'>Followers</h2>
+                <h3 class='text-xl' id='followers'></h3>
+            </div>
+            <div class='bg-green-100 py-8 w-1/2 md:w-1/4'>
+                <h2 class='text-2xl font-medium'>Followings</h2>
+                <h3 class='text-xl' id='followings'></h3>
+            </div>
+            <div class='bg-teal-100 py-8 w-1/2 md:w-1/4'>
+                <h2 class='text-2xl font-medium'>Repositories</h2>
+                <h3 class='text-xl' id='repositories'></h3>
+            </div>
+            <div class='bg-green-100 py-8 w-1/2 md:w-1/4'>
+                <h2 class='text-2xl font-medium'>Joined date</h2>
+                <h3 class='text-xl' id='joined-date'></h3>
+            </div>
 
-        <h4 id='followers'></h4>
-        <h4 id='followings'></h4>
-        <h4 id='created-at'></h4>
+        </div>
+        <!-- <div class='p-4 bg-teal-100'>
+            <h4 class='text-2xl font-bold text-center' id='public-repos'>Repositories</h4>
+        </div> -->
+        <div class='flex flex-wrap' id='repos-list'>
+            <!-- <div onclick="window.location='${html_url}';" class='cursor-pointer p-10 py-24 text-center w-1/3 bg-gray-100 text-xl p-4 border-gray-300 border'>
+                <img class='mx-4 mb-4 w-16 mx-auto rounded-full' src='images/github1.png'>
+                <h3 class='w-auto text-2xl mb-2'>${name}</h3>
+                <h3 class='w-auto text-sm'>${parseDate(created_at)}</h3>
+            </div> -->
+        </div>
     </div>
-    <div id='error' style='display: none;'>User not found</div>
-    <script src='script.js'></script>
+
+    <h4 id='followers'></h4>
+    <h4 id='followings'></h4>
+    <h4 id='created-at'></h4>
+    </div>
+    <div class='hidden text-center' id='error'>
+        <img class='mx-auto w-40 mb-10' src='images/github1.png'>
+        <h2 class='font-bold text-3xl'>
+            User not found
+        </h2>
+    </div>
+    <script src='js/script.js'></script>
 </body>
 
 </html>
