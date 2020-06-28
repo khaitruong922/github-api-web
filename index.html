@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='css/style.css'>
     <link rel="icon" href="images/github.png" type="image/x-icon">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/locale/af.min.js'></script>
     <title>GitHub Search</title>
 </head>
 
@@ -24,46 +25,37 @@
                 class="cursor-pointer font-semibold outline-none button-big bg-purple-100 py-2 px-4 hover:bg-purple-200 text-gray-700"
                 value="Search">
     </div>
-
     </form>
     <div class='mx-auto lg:w-2/3' id='users'>
     </div>
     <div class='mx-auto lg:w-2/3' id='content'>
         <img id='back-btn' class='bg-gray-100 w-12 mb-2 rounded-full p-2 cursor-pointer' src='images/back.png'>
-        <div class='text-center p-8 bg-purple-100'>
+        <div class='text-center p-8 bg-orange-200'>
             <a href='#' id='profile-url' target='_blank'>
                 <img class='mx-auto rounded-full w-32 h-auto' id='avatar' src='images/avatar.png' alt='avatar'>
                 <h2 class='p-5 text-3xl' id='name'>Name</h2>
             </a>
         </div>
-        <div class='flex flex-wrap text-center'>
-            <div class='bg-teal-100 py-8 w-1/2 md:w-1/4'>
+        <div class='flex flex-wrap text-center mb-4'>
+            <div class='bg-purple-100 py-8 w-1/2 md:w-1/4'>
                 <h2 class='text-2xl font-medium'>Followers</h2>
                 <h3 class='text-xl' id='followers'></h3>
             </div>
-            <div class='bg-green-100 py-8 w-1/2 md:w-1/4'>
+            <div class='bg-pink-100 py-8 w-1/2 md:w-1/4'>
                 <h2 class='text-2xl font-medium'>Followings</h2>
                 <h3 class='text-xl' id='followings'></h3>
             </div>
-            <div class='bg-teal-100 py-8 w-1/2 md:w-1/4'>
+            <div class='bg-indigo-100 py-8 w-1/2 md:w-1/4'>
                 <h2 class='text-2xl font-medium'>Repositories</h2>
                 <h3 class='text-xl' id='repositories'></h3>
             </div>
-            <div class='bg-green-100 py-8 w-1/2 md:w-1/4'>
+            <div class='bg-teal-100 py-8 w-1/2 md:w-1/4'>
                 <h2 class='text-2xl font-medium'>Joined date</h2>
                 <h3 class='text-xl' id='joined-date'></h3>
             </div>
 
         </div>
-        <!-- <div class='p-4 bg-teal-100'>
-            <h4 class='text-2xl font-bold text-center' id='public-repos'>Repositories</h4>
-        </div> -->
         <div class='flex flex-wrap' id='repos-list'>
-            <!-- <div onclick="window.location='${html_url}';" class='cursor-pointer p-10 py-24 text-center w-1/3 bg-gray-100 text-xl p-4 border-gray-300 border'>
-                <img class='mx-4 mb-4 w-16 mx-auto rounded-full' src='images/github1.png'>
-                <h3 class='w-auto text-2xl mb-2'>${name}</h3>
-                <h3 class='w-auto text-sm'>${parseDate(created_at)}</h3>
-            </div> -->
         </div>
     </div>
     </div>
