@@ -14,7 +14,7 @@
         <a href='index.html'><img src='images/github.png' class='w-12 mx-8 inline'></a>
         <h2 class="font-medium text-3xl inline text-purple-900">GitHub Search</h2>
     </div>
-    <div class='text-center mb-10 '>
+    <div class='text-center mb-10'>
         <form id='search-form'>
             <div class='m-auto w-3/4 md:w-1/2 border-2 border-purple-200 inline-block'>
                 <input placeholder="Username" id='username-input' type='text'
@@ -31,11 +31,12 @@
         <img id='back-btn' class='bg-gray-100 w-12 mb-2 rounded-full p-2 cursor-pointer' src='images/back.png'>
         <div class='text-center p-8 bg-orange-200'>
             <a href='#' id='profile-url' target='_blank'>
-                <img class='mx-auto rounded-full w-32 h-auto' id='avatar' src='images/avatar.png' alt='avatar'>
-                <h2 class='p-5 text-3xl' id='name'>Name</h2>
+                <img class='mx-auto rounded-full w-32 h-auto border border-gray-400' id='avatar' src='images/avatar.png' alt='avatar'>
+                <h2 class='text-3xl' id='name'>Name</h2>
+                <h2 class='font-thin' id='extra-info'>Extra info</h2>
             </a>
         </div>
-        <div class='flex flex-wrap text-center mb-4'>
+        <div class='flex flex-wrap text-center'>
             <div class='bg-purple-100 py-8 w-1/2 md:w-1/4'>
                 <h2 class='text-2xl font-medium'>Followers</h2>
                 <h3 class='text-xl' id='followers'></h3>

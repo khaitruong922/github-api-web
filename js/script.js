@@ -36,13 +36,15 @@ async function fetchRepos(username) {
 
     if (result.message) return;
 
+
     result.forEach(repo => { displayRepo(repo); });
 }
 
 function displayRepo(data) {
-    let { name, created_at, html_url, description, avatar_url,updated_at } = data;
+    let { name, created_at, html_url, description, avatar_url, stargazers_count, updated_at } = data;
     created_at = parseDate(created_at);
     updated_at = parseDate(updated_at);
+    console.log(data);
     const color = getRandomTailwindColor();
     const opacity = getRandomTailwindOpacity();
     if (!description) description = "No description.";
@@ -54,7 +56,7 @@ function displayRepo(data) {
                 <h3 class='text-2xl mb-2'>${name}</h3>
                 <h3 class='text-sm mb-2'>${description}</h3>
                 <h3 class='text-sm mb-2'>Created at: ${created_at}</h3>
-                <h3 class='text-sm'>Last active: ${updated_at}</h3>
+                <h3 class='text-sm'>Stars: ${stargazers_count}</h3>
             </div>
         </a>
     </div>
@@ -65,8 +67,8 @@ function displayUserResult(data) {
     const { login, avatar_url } = data;
     userResultsDiv.innerHTML +=
         ` <div class='border border-grey-200 cursor-pointer p-4 bg-gray-100 user-item' data-value='${login}'>
-            <img src='${avatar_url}' class='w-8 inline mr-4'>
-            <h2 class='inline'>${login}</h2>
+            <img src='${avatar_url}' class='w-8 inline mr-4 rounded-full border border-gray-400'>
+            <h2 class='inline mr-4'>${login}</h2>
         </div>`;
 }
 function setOnClickUserResults() {
@@ -83,7 +85,14 @@ function setOnClickUserResults() {
 function displayUserData(data) {
     displayOnly('content');
     const { name, html_url, avatar_url, public_repos, followers, following, created_at } = data;
+    const { bio, location, company } = data;
+    let extraInfo = "";
+    extraInfo = extraInfo || company;
+    extraInfo = extraInfo || location;
+    extraInfo = extraInfo || bio;
+
     document.getElementById('name').innerText = name;
+    document.getElementById('extra-info').innerText = extraInfo;
     document.getElementById('profile-url').href = html_url;
     document.getElementById('avatar').src = avatar_url;
     document.getElementById('repositories').innerText = public_repos;
@@ -108,8 +117,8 @@ function getRandomTailwindColor() {
     const random = Math.floor(Math.random() * colors.length);
     return colors[random];
 }
-function getRandomTailwindOpacity(){
-    const opacity = [100,200]
+function getRandomTailwindOpacity() {
+    const opacity = [100, 200]
     const random = Math.floor(Math.random() * opacity.length);
     return opacity[random];
 }
