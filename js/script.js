@@ -104,26 +104,32 @@ function displayUserData(data) {
 function parseDate(date) {
     return new Date(date).toISOString().split('T')[0];
 }
-
+const allId = ['content', 'users', 'error']
 function displayOnly(displayId) {
-    const allId = ['content', 'users', 'error']
-    allId.forEach(id => { document.getElementById(id).classList.add('hidden') });
-    const visibleElement = document.getElementById(displayId);
-    if (visibleElement)
-        visibleElement.classList.remove('hidden');
+    allId.forEach(id => { hideElement(id); });
+    showElement(displayId);
+}
+function showElement(id) {
+    document.getElementById(id).classList.remove('hidden');
+}
+function hideElement(id) {
+    document.getElementById(id).classList.add('hidden');
+}
+function displayAll() {
+    allId.forEach(id => { showElement(id) });
 }
 function getRandomTailwindColor() {
     const colors = ['red', 'blue', 'gray', 'pink', 'teal', 'green', 'indigo', 'orange', 'purple', 'yellow'];
-    const random = Math.floor(Math.random() * colors.length);
-    return colors[random];
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    return colors[randomIndex];
 }
 function getRandomTailwindOpacity() {
     const opacity = [100, 200]
-    const random = Math.floor(Math.random() * opacity.length);
-    return opacity[random];
+    const randomIndex = Math.floor(Math.random() * opacity.length);
+    return opacity[randomIndex];
 }
 // MAIN 
-if (!DEBUG) { displayOnly('') }
+if (DEBUG) { displayAll(); hideElement('error') }
 searchForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const searchQuery = usernameInput.value
