@@ -1,53 +1,49 @@
-const DEBUG = false;
+const DEBUG = false
+const usernameInput = document.getElementById('username-input')
+const searchForm = document.getElementById('search-form')
+const backButton = document.getElementById('back-btn')
+const allId = ['content', 'users', 'error']
+const userURLCreator = (user) => `https://api.github.com/search/users?q=${user}`
+const repoURLCreator = (user) => `https://api.github.com/users/${user}/repos`
+const userInfoURLCreator = (user) => `https://api.github.com/users/${user}`
 
-const usernameInput = document.getElementById('username-input');
-const searchForm = document.getElementById('search-form');
-const backButton = document.getElementById('back-btn');
-async function fetchUsers(searchQuery) {
-    if (!searchQuery) return;
-    const url = `https://api.github.com/search/users?q=${searchQuery}`
-    const response = await fetch(url);
-    const result = await response.json();
-    displayOnly('users')
-    document.getElementById('users').innerHTML = '';
-    if (result.message) return;
-    const { items } = result;
-    if (items.length == 0) {
-        displayOnly('error');
-        return;
-    }
-    items.forEach(user => { displayUserResult(user); });
-    setOnClickUserResults();
+async function get(query, urlCreator) {
+    if (!query) return
+    const url = urlCreator(query)
+    const response = await fetch(url)
+    return response.json()
 }
+async function fetchUsers(searchQuery) {
+    const result = await get(searchQuery, userURLCreator)
+    displayOnly('users')
+    clearElement('users')
+    if (result.message) return
+    const { items } = result
+    if (items.length == 0) { displayOnly('error'); return }
+    items.forEach(user => { displayUserResult(user) })
+}
+
 async function fetchUserInfo(username) {
-    if (!username) return;
-    const url = `https://api.github.com/users/${username}`
-    const response = await fetch(url);
-    const result = await response.json();
-    if (result.message) return;
-    displayUserData(result);
+    const result = await get(username, userInfoURLCreator)
+    if (result.message) return
+    displayUserData(result)
 }
 async function fetchRepos(username) {
-    if (!username) return;
-    const url = `https://api.github.com/users/${username}/repos`
-    const response = await fetch(url);
-    const result = await response.json();
-    document.getElementById('repos-list').innerHTML = '';
-
-    if (result.message) return;
-
-
-    result.forEach(repo => { displayRepo(repo); });
+    const result = await get(username, repoURLCreator)
+    clearElement('repos-list')
+    if (result.message) return
+    result.forEach(repo => { displayRepo(repo) })
 }
-
+function clearElement(id) {
+    document.getElementById(id).innerHTML = ''
+}
 function displayRepo(data) {
-    let { name, created_at, html_url, description, avatar_url, stargazers_count, updated_at } = data;
-    created_at = parseDate(created_at);
-    updated_at = parseDate(updated_at);
-    console.log(data);
-    const color = getRandomTailwindColor();
-    const opacity = getRandomTailwindOpacity();
-    if (!description) description = "No description.";
+    let { name, created_at, html_url, description, avatar_url, stargazers_count, updated_at } = data
+    created_at = parseDate(created_at)
+    updated_at = parseDate(updated_at)
+    const color = getRandomTailwindColor()
+    const opacity = getRandomTailwindOpacity()
+    if (!description) description = "No description."
     document.getElementById('repos-list').innerHTML +=
         `
     <div class='p-10 py-24 text-center w-full md:w-1/2 lg:w-1/3 bg-${color}-${opacity} text-xl p-4 border-gray-400 border'>
@@ -60,80 +56,72 @@ function displayRepo(data) {
             </div>
         </a>
     </div>
-    `;
+    `
 }
 function displayUserResult(data) {
-    const userResultsDiv = document.getElementById('users');
-    const { login, avatar_url } = data;
+    const userResultsDiv = document.getElementById('users')
+    const { login: username, avatar_url } = data
     userResultsDiv.innerHTML +=
-        ` <div class='border border-grey-200 cursor-pointer p-4 bg-gray-100 user-item' data-value='${login}'>
+        ` <div class='border border-grey-200 cursor-pointer p-4 bg-gray-100 user-item'>
             <img src='${avatar_url}' class='w-8 inline mr-4 rounded-full border border-gray-400'>
-            <h2 class='inline mr-4'>${login}</h2>
-        </div>`;
-}
-function setOnClickUserResults() {
-    const results = document.getElementsByClassName('user-item');
-    for (let i = 0; i < results.length; i++) {
-        const element = results[i];
-        const username = element.dataset.value;
-        element.addEventListener('click', () => {
-            fetchUserInfo(username);
-            fetchRepos(username);
-        })
-    }
+            <h2 class='inline mr-4'>${username}</h2>
+        </div>`
+    userResultsDiv.addEventListener('click', () => {
+        fetchUserInfo(username)
+        fetchRepos(username)
+    })
 }
 function displayUserData(data) {
-    displayOnly('content');
-    const { name, html_url, avatar_url, public_repos, followers, following, created_at } = data;
-    const { bio, location, company } = data;
-    let extraInfo = "";
-    extraInfo = extraInfo || company;
-    extraInfo = extraInfo || location;
-    extraInfo = extraInfo || bio;
-
-    document.getElementById('name').innerText = name;
-    document.getElementById('extra-info').innerText = extraInfo;
-    document.getElementById('profile-url').href = html_url;
-    document.getElementById('avatar').src = avatar_url;
-    document.getElementById('repositories').innerText = public_repos;
-    document.getElementById('followers').innerText = followers;
-    document.getElementById('followings').innerText = following;
-    document.getElementById('joined-date').innerText = parseDate(created_at);
+    displayOnly('content')
+    const { name, html_url, avatar_url, public_repos, followers, following, created_at } = data
+    const { bio, location, company } = data
+    let extraInfo = ""
+    extraInfo = extraInfo || company
+    extraInfo = extraInfo || location
+    extraInfo = extraInfo || bio
+    document.getElementById('name').innerText = name
+    document.getElementById('extra-info').innerText = extraInfo
+    document.getElementById('profile-url').href = html_url
+    document.getElementById('avatar').src = avatar_url
+    document.getElementById('repositories').innerText = public_repos
+    document.getElementById('followers').innerText = followers
+    document.getElementById('followings').innerText = following
+    document.getElementById('joined-date').innerText = parseDate(created_at)
 }
-
 function parseDate(date) {
-    return new Date(date).toISOString().split('T')[0];
+    return new Date(date).toISOString().split('T')[0]
 }
-const allId = ['content', 'users', 'error']
 function displayOnly(displayId) {
-    allId.forEach(id => { hideElement(id); });
-    showElement(displayId);
+    hideAll()
+    showElement(displayId)
 }
 function showElement(id) {
-    document.getElementById(id).classList.remove('hidden');
+    document.getElementById(id).classList.remove('hidden')
 }
 function hideElement(id) {
-    document.getElementById(id).classList.add('hidden');
+    document.getElementById(id).classList.add('hidden')
+}
+function hideAll() {
+    allId.forEach(id => { hideElement(id) })
 }
 function displayAll() {
-    allId.forEach(id => { showElement(id) });
+    allId.forEach(id => { showElement(id) })
 }
 function getRandomTailwindColor() {
-    const colors = ['red', 'blue', 'gray', 'pink', 'teal', 'green', 'indigo', 'orange', 'purple', 'yellow'];
-    const randomIndex = Math.floor(Math.random() * colors.length);
-    return colors[randomIndex];
+    const colors = ['red', 'blue', 'gray', 'pink', 'teal', 'green', 'indigo', 'orange', 'purple', 'yellow']
+    const randomIndex = Math.floor(Math.random() * colors.length)
+    return colors[randomIndex]
 }
 function getRandomTailwindOpacity() {
     const opacity = [100, 200]
-    const randomIndex = Math.floor(Math.random() * opacity.length);
-    return opacity[randomIndex];
+    const randomIndex = Math.floor(Math.random() * opacity.length)
+    return opacity[randomIndex]
 }
 // MAIN 
 if (DEBUG) { displayAll(); hideElement('error') }
 searchForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const searchQuery = usernameInput.value
-    fetchUsers(searchQuery);
+    fetchUsers(searchQuery)
 })
-backButton.addEventListener('click', () => { displayOnly('users') });
-
+backButton.addEventListener('click', () => { displayOnly('users') })
