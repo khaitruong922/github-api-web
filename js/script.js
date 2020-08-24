@@ -21,8 +21,8 @@ async function fetchUsers(searchQuery) {
     const { items } = result
     if (items.length == 0) { displayOnly('error'); return }
     items.forEach(user => { displayUserResult(user) })
+    setOnClickUserResults()
 }
-
 async function fetchUserInfo(username) {
     const result = await get(username, userInfoURLCreator)
     if (result.message) return
@@ -34,8 +34,31 @@ async function fetchRepos(username) {
     if (result.message) return
     result.forEach(repo => { displayRepo(repo) })
 }
-function clearElement(id) {
-    document.getElementById(id).innerHTML = ''
+function displayUserResult(data) {
+    const userResultsDiv = document.getElementById('users')
+    const { login: username, avatar_url } = data
+    userResultsDiv.innerHTML +=
+        ` <div class='border border-grey-200 cursor-pointer p-4 bg-gray-100 js-user-results' data-username='${username}'>
+            <img src='${avatar_url}' class='w-8 inline mr-4 rounded-full border border-gray-400'>
+            <h2 class='inline mr-4'>${username}</h2>
+        </div>`
+}
+function displayUserData(data) {
+    displayOnly('content')
+    const { name, html_url, avatar_url, public_repos, followers, following, created_at } = data
+    const { bio, location, company } = data
+    let extraInfo = ""
+    extraInfo = extraInfo || company
+    extraInfo = extraInfo || location
+    extraInfo = extraInfo || bio
+    document.getElementById('name').innerText = name
+    document.getElementById('extra-info').innerText = extraInfo
+    document.getElementById('profile-url').href = html_url
+    document.getElementById('avatar').src = avatar_url
+    document.getElementById('repositories').innerText = public_repos
+    document.getElementById('followers').innerText = followers
+    document.getElementById('followings').innerText = following
+    document.getElementById('joined-date').innerText = parseDate(created_at)
 }
 function displayRepo(data) {
     let { name, created_at, html_url, description, avatar_url, stargazers_count, updated_at } = data
@@ -58,38 +81,24 @@ function displayRepo(data) {
     </div>
     `
 }
-function displayUserResult(data) {
-    const userResultsDiv = document.getElementById('users')
-    const { login: username, avatar_url } = data
-    userResultsDiv.innerHTML +=
-        ` <div class='border border-grey-200 cursor-pointer p-4 bg-gray-100 user-item'>
-            <img src='${avatar_url}' class='w-8 inline mr-4 rounded-full border border-gray-400'>
-            <h2 class='inline mr-4'>${username}</h2>
-        </div>`
-    userResultsDiv.addEventListener('click', () => {
-        fetchUserInfo(username)
-        fetchRepos(username)
-    })
+
+function setOnClickUserResults() {
+    const userResults = document.getElementsByClassName('js-user-results')
+    for (let i = 0; i < userResults.length; i++) {
+        const element = userResults[i];
+        const username = element.dataset.username
+        element.addEventListener('click', () => {
+            fetchUserInfo(username)
+            fetchRepos(username)
+        })
+    }
 }
-function displayUserData(data) {
-    displayOnly('content')
-    const { name, html_url, avatar_url, public_repos, followers, following, created_at } = data
-    const { bio, location, company } = data
-    let extraInfo = ""
-    extraInfo = extraInfo || company
-    extraInfo = extraInfo || location
-    extraInfo = extraInfo || bio
-    document.getElementById('name').innerText = name
-    document.getElementById('extra-info').innerText = extraInfo
-    document.getElementById('profile-url').href = html_url
-    document.getElementById('avatar').src = avatar_url
-    document.getElementById('repositories').innerText = public_repos
-    document.getElementById('followers').innerText = followers
-    document.getElementById('followings').innerText = following
-    document.getElementById('joined-date').innerText = parseDate(created_at)
-}
+
 function parseDate(date) {
     return new Date(date).toISOString().split('T')[0]
+}
+function clearElement(id) {
+    document.getElementById(id).innerHTML = ''
 }
 function displayOnly(displayId) {
     hideAll()
