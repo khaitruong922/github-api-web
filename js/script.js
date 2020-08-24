@@ -7,14 +7,13 @@ const userURLCreator = (user) => `https://api.github.com/search/users?q=${user}`
 const repoURLCreator = (user) => `https://api.github.com/users/${user}/repos`
 const userInfoURLCreator = (user) => `https://api.github.com/users/${user}`
 
-async function get(query, urlCreator) {
-    if (!query) return
-    const url = urlCreator(query)
+async function fetchJson(url) {
     const response = await fetch(url)
     return response.json()
 }
 async function fetchUsers(searchQuery) {
-    const result = await get(searchQuery, userURLCreator)
+    if (!searchQuery) return
+    const result = await fetchJson(userURLCreator(searchQuery))
     displayOnly('users')
     clearElement('users')
     if (result.message) return
@@ -24,12 +23,14 @@ async function fetchUsers(searchQuery) {
     setOnClickUserResults()
 }
 async function fetchUserInfo(username) {
-    const result = await get(username, userInfoURLCreator)
+    if (!username) return
+    const result = await fetchJson(userInfoURLCreator(username))
     if (result.message) return
     displayUserData(result)
 }
 async function fetchRepos(username) {
-    const result = await get(username, repoURLCreator)
+    if (!username) return
+    const result = await fetchJson(repoURLCreator(username))
     clearElement('repos-list')
     if (result.message) return
     result.forEach(repo => { displayRepo(repo) })
